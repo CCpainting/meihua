@@ -292,57 +292,246 @@ function divine(){
   el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 </script>
-<!-- === 黑客帝国易经文字雨特效 === -->
-<canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0.8;"></canvas>
+<!-- === 黑客帝国文字雨 + 横向弹幕特效（带隐藏控制台） === -->
+<style>
+/* 横向弹幕的容器和动画 */
+#danmu-container {
+    position: fixed;
+    top: 0; left: 0; width: 100vw; height: 100vh;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+.danmu-item {
+    position: absolute;
+    white-space: nowrap;
+    color: #c9a84c;
+    font-family: "Songti SC", "STSong", serif;
+    text-shadow: 0 0 8px rgba(201,168,76,0.6);
+    animation: danmu-move linear forwards;
+}
+@keyframes danmu-move {
+    from { transform: translateX(-100%); }
+    to { transform: translateX(100vw); }
+}
+</style>
+
+<!-- 垂直文字雨的画布 -->
+<canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;"></canvas>
+<!-- 横向弹幕的容器 -->
+<div id="danmu-container"></div>
+
+<!-- 隐藏的控制面板 -->
+<div id="admin-panel" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%,-50%); width:90%; max-width:320px; background:rgba(24,28,37,0.98); border:1px solid #8a733a; border-radius:10px; padding:20px; z-index:9999; box-shadow:0 10px 30px rgba(0,0,0,0.9); color:#e8e4da; font-family:sans-serif; font-size:14px; backdrop-filter:blur(10px);">
+    <div style="font-size:16px;color:#c9a84c;margin-bottom:15px;text-align:center;border-bottom:1px solid #2a2f3a;padding-bottom:8px;letter-spacing:2px;">🔐 创作者控制台</div>
+    
+    <div style="margin-bottom:15px;">
+        <label style="display:flex;justify-content:space-between;margin-bottom:5px;">整体亮度 <span id="val-opacity" style="color:#c9a84c;">0.3</span></label>
+        <input type="range" id="set-opacity" min="0" max="1" step="0.05" value="0.3" style="width:100%;">
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label style="display:flex;justify-content:space-between;margin-bottom:5px;">下落/飘过速度 <span id="val-speed" style="color:#c9a84c;">1</span></label>
+        <input type="range" id="set-speed" min="0.1" max="3" step="0.1" value="1" style="width:100%;">
+    </div>
+
+    <div style="margin-bottom:15px;">
+        <label style="display:flex;justify-content:space-between;margin-bottom:5px;">文字大小 <span id="val-size" style="color:#c9a84c;">16</span> px</label>
+        <input type="range" id="set-size" min="10" max="30" step="1" value="16" style="width:100%;">
+    </div>
+
+    <div style="margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; background:#0d0f14; padding:8px 12px; border-radius:6px; border:1px solid #2a2f3a;">
+        <div style="display:flex; align-items:center; gap:8px;">
+            <span>亮色</span>
+            <input type="color" id="set-color" value="#c9a84c" style="width:30px;height:25px;border:none;background:none;cursor:pointer;">
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+            <span>暗色</span>
+            <input type="color" id="set-color2" value="#8a733a" style="width:30px;height:25px;border:none;background:none;cursor:pointer;">
+        </div>
+    </div>
+
+    <button id="close-admin" style="width:100%; padding:10px; background:#3a3220; color:#c9a84c; border:1px solid #8a733a; border-radius:6px; cursor:pointer; font-size:15px; letter-spacing:2px;">关闭面板</button>
+</div>
+
 <script>
-// 准备易经里的词汇
+// 1. 读取本地设置
+var config = JSON.parse(localStorage.getItem('matrixConfig')) || {
+    opacity: 0.3,
+    speed: 1,
+    fontSize: 16,
+    colorMain: '#c9a84c',
+    colorDim: '#8a733a'
+};
+
+// ======= 垂直文字雨逻辑 =======
 var chars = '乾坤震巽坎离艮兑元亨利贞吉凶悔吝无咎潜龙勿用飞龙在天厚德载物自强不息金木水火土天地人'.split('');
 var canvas = document.getElementById('matrix-bg');
 var ctx = canvas.getContext('2d');
-var w, h;
-var columns, drops;
+var w, h, columns, drops;
 
-// 初始化画布大小
 function resize() {
     w = canvas.width = window.innerWidth;
     h = canvas.height = window.innerHeight;
-    columns = Math.floor(w / 20); // 根据宽度决定列数
+    columns = Math.floor(w / 20);
     drops = [];
-    for (var i = 0; i < columns; i++) {
-        drops[i] = Math.random() * h; // 随机初始高度
-    }
+    for (var i = 0; i < columns; i++) drops[i] = Math.random() * h;
 }
 window.addEventListener('resize', resize);
 resize();
 
-// 动画循环
 function draw() {
-    // 用半透明的黑色覆盖，形成拖尾效果
-    ctx.fillStyle = 'rgba(15, 17, 23, 0.05)';
+    ctx.fillStyle = 'rgba(15, 17, 23, 0.1)'; 
     ctx.fillRect(0, 0, w, h);
-    
-    ctx.font = '16px "Songti SC", serif';
+    ctx.font = config.fontSize + 'px "Songti SC", serif';
     
     for (var i = 0; i < drops.length; i++) {
         var text = chars[Math.floor(Math.random() * chars.length)];
-        var x = i * 20;
-        var y = drops[i] * 20;
-        
-        // 90% 是暗金色，10% 是亮金色（或者你喜欢的绿色/蓝色）
-        ctx.fillStyle = Math.random() > 0.9 ? '#c9a84c' : '#8a733a';
-        // 如果想改成绿色黑客帝国风格，把上面那句换成：ctx.fillStyle = Math.random() > 0.9 ? '#0f0' : '#050';
-        
+        var x = i * (config.fontSize + 4); 
+        var y = drops[i] * (config.fontSize + 4);
+        ctx.fillStyle = Math.random() > 0.9 ? config.colorMain : config.colorDim;
         ctx.fillText(text, x, y);
-        
-        // 随机重置位置，形成无尽下落
-        if (y > h && Math.random() > 0.975) {
-            drops[i] = 0;
-        }
-        drops[i]+=0.3;
+        if (y > h && Math.random() > 0.975) drops[i] = 0;
+        drops[i] += config.speed;
     }
     requestAnimationFrame(draw);
 }
 draw();
+
+// ======= 横向弹幕逻辑 =======
+var danmuTexts = [
+    // —— 梅花易数心法 ——
+    "法无定法，万物皆数", "心诚则灵，起卦有应", "一物从来有一身，一身还有一乾坤", 
+    "心动则卦成，念起则数随", "数由心生，卦由数成", "风声鸟语，皆是天机", 
+    "万物皆可起卦，万物皆是太极", "先天而天弗违，后天而奉天时", "察其言，观其色，占其心",
+    "静极生动，动极生静", "观梅知易，见微知著", "天地之大，不出一心",
+
+    // —— 体用生克断语 ——
+    "动者为用，静者为体", "体用生克，吉凶定矣", "用生体，百事顺遂", 
+    "体克用，谋事可成", "比和者吉，克战者凶", "体生用，耗散之象", 
+    "用克体，受制于人", "体宜旺相，不宜休囚", "生体多吉，克体多凶",
+    
+    // —— 易经经典名句 ——
+    "天行健，君子以自强不息", "地势坤，君子以厚德载物", "元亨利贞", 
+    "积善之家，必有余庆", "穷则变，变则通，通则久", "一阴一阳之谓道", 
+    "潜龙勿用，阳在下也", "飞龙在天，大人造也", "亢龙有悔，盈不可久也", 
+    "履霜坚冰至，阴始凝也", "君子终日乾乾，夕惕若厉", "吉凶悔吝，生乎动者也", 
+    
+    // —— 四象八卦 ——
+    "太极生两仪，两仪生四象，四象生八卦", "乾道成男，坤道成女", 
+    "乾为天，坤为地，震为雷，巽为风", "坎为水，离为火，艮为山，兑为泽", 
+    "天地定位，山泽通气，雷风相薄，水火不相射"
+];
+var danmuContainer = document.getElementById('danmu-container');
+
+function createDanmu() {
+    var el = document.createElement('div');
+    el.className = 'danmu-item';
+    el.innerText = danmuTexts[Math.floor(Math.random() * danmuTexts.length)];
+    
+    // 随机高度 (10% 到 85%)
+    el.style.top = (Math.random() * 75 + 10) + 'vh';
+    el.style.left = '0'; 
+  
+    // 随机字号 (14px 到 22px)
+    var size = Math.floor(Math.random() * 9 + 14);
+    el.style.fontSize = size + 'px';
+    
+    // 随机透明度 (0.2 到 0.6)
+    el.style.opacity = (Math.random() * 0.4 + 0.2);
+    
+    // 颜色跟随控制台设置
+    el.style.color = config.colorMain;
+
+    // 动画持续时间 (与速度设置挂钩)
+    var duration = (Math.random() * 10 + 20) / config.speed; 
+    el.style.animationDuration = duration + 's';
+
+    danmuContainer.appendChild(el);
+
+    // 动画结束后移除
+    setTimeout(function() {
+        el.remove();
+    }, duration * 1000);
+}
+
+// 初始先来几条
+for (var i=0; i<3; i++) {
+    setTimeout(createDanmu, i * 3000);
+}
+
+// 每隔 4-6 秒放一条新弹幕
+setInterval(function() {
+    createDanmu();
+}, Math.random() * 2000 + 4000);
+
+// ======= 隐藏控制台逻辑 =======
+var clickCount = 0;
+var clickTimer = null;
+var panel = document.getElementById('admin-panel');
+var h1 = document.querySelector('h1'); 
+
+h1.addEventListener('click', function() {
+    clickCount++;
+    clearTimeout(clickTimer);
+    clickTimer = setTimeout(function() { clickCount = 0; }, 1000);
+    
+    if (clickCount === 5) {
+        clickCount = 0;
+        var pwd = prompt('请输入创作者专属密码：');
+        if (pwd === '8888') {
+            panel.style.display = 'block';
+            initPanel(); 
+        } else if (pwd !== null) {
+            alert('暗号错误，请勿乱动。');
+        }
+    }
+});
+
+var setOpacity = document.getElementById('set-opacity');
+var setSpeed = document.getElementById('set-speed');
+var setSize = document.getElementById('set-size');
+var setColor = document.getElementById('set-color');
+var setColor2 = document.getElementById('set-color2');
+
+function initPanel() {
+    canvas.style.opacity = config.opacity;
+    setOpacity.value = config.opacity;
+    setSpeed.value = config.speed;
+    setSize.value = config.fontSize;
+    setColor.value = config.colorMain;
+    setColor2.value = config.colorDim;
+    document.getElementById('val-opacity').innerText = config.opacity;
+    document.getElementById('val-speed').innerText = config.speed;
+    document.getElementById('val-size').innerText = config.fontSize;
+}
+canvas.style.opacity = config.opacity;
+
+document.getElementById('close-admin').onclick = function() { panel.style.display = 'none'; };
+
+function saveConfig() { localStorage.setItem('matrixConfig', JSON.stringify(config)); }
+
+setOpacity.oninput = function() {
+    config.opacity = this.value;
+    canvas.style.opacity = config.opacity;
+    document.getElementById('val-opacity').innerText = this.value;
+    saveConfig();
+};
+setSpeed.oninput = function() {
+    config.speed = parseFloat(this.value);
+    document.getElementById('val-speed').innerText = this.value;
+    saveConfig();
+};
+setSize.oninput = function() {
+    config.fontSize = parseInt(this.value);
+    document.getElementById('val-size').innerText = this.value;
+    saveConfig();
+};
+setColor.oninput = function() { 
+    config.colorMain = this.value; 
+    saveConfig(); 
+};
+setColor2.oninput = function() { config.colorDim = this.value; saveConfig(); };
 </script>
 <!-- === 特效结束 === -->
 </body>
