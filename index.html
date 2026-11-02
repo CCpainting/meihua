@@ -293,7 +293,7 @@ function divine(){
 }
 </script>
 <!-- === 黑客帝国易经文字雨特效 === -->
-<canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0.35;"></canvas>
+<canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0.8;"></canvas>
 <script>
 // 准备易经里的词汇
 var chars = '乾坤震巽坎离艮兑元亨利贞吉凶悔吝无咎潜龙勿用飞龙在天厚德载物自强不息金木水火土天地人'.split('');
@@ -318,7 +318,7 @@ resize();
 // 动画循环
 function draw() {
     // 用半透明的黑色覆盖，形成拖尾效果
-    ctx.fillStyle = 'rgba(15, 17, 23, 0.1)';
+    ctx.fillStyle = 'rgba(15, 17, 23, 0.05)';
     ctx.fillRect(0, 0, w, h);
     
     ctx.font = '16px "Songti SC", serif';
@@ -338,7 +338,7 @@ function draw() {
         if (y > h && Math.random() > 0.975) {
             drops[i] = 0;
         }
-        drops[i]++;
+        drops[i]+=0.3;
     }
     requestAnimationFrame(draw);
 }
