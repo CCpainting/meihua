@@ -68,7 +68,7 @@ h1{font-size:48px;font-weight:600;text-align:center;color:var(--gold);letter-spa
 </head>
 <body>
 
-<h1>梅 花 易 數 · 全 解</h1>
+<h1>梅 花 易 數 · 小 解</h1>
 <p class="subtitle">三数起卦 · 本互变三卦 · 体用生克 · 分事项解读</p>
 <p class="hint-top">💡 请先选择下方【所问事项】，再填入三个数字起卦。事项不同，同一个体用关系的吉凶含义完全不同。</p>
 
@@ -292,5 +292,58 @@ function divine(){
   el.scrollIntoView({behavior:'smooth',block:'start'});
 }
 </script>
+<!-- === 黑客帝国易经文字雨特效 === -->
+<canvas id="matrix-bg" style="position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-1;pointer-events:none;opacity:0.35;"></canvas>
+<script>
+// 准备易经里的词汇
+var chars = '乾坤震巽坎离艮兑元亨利贞吉凶悔吝无咎潜龙勿用飞龙在天厚德载物自强不息金木水火土天地人'.split('');
+var canvas = document.getElementById('matrix-bg');
+var ctx = canvas.getContext('2d');
+var w, h;
+var columns, drops;
+
+// 初始化画布大小
+function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    columns = Math.floor(w / 20); // 根据宽度决定列数
+    drops = [];
+    for (var i = 0; i < columns; i++) {
+        drops[i] = Math.random() * h; // 随机初始高度
+    }
+}
+window.addEventListener('resize', resize);
+resize();
+
+// 动画循环
+function draw() {
+    // 用半透明的黑色覆盖，形成拖尾效果
+    ctx.fillStyle = 'rgba(15, 17, 23, 0.1)';
+    ctx.fillRect(0, 0, w, h);
+    
+    ctx.font = '16px "Songti SC", serif';
+    
+    for (var i = 0; i < drops.length; i++) {
+        var text = chars[Math.floor(Math.random() * chars.length)];
+        var x = i * 20;
+        var y = drops[i] * 20;
+        
+        // 90% 是暗金色，10% 是亮金色（或者你喜欢的绿色/蓝色）
+        ctx.fillStyle = Math.random() > 0.9 ? '#c9a84c' : '#8a733a';
+        // 如果想改成绿色黑客帝国风格，把上面那句换成：ctx.fillStyle = Math.random() > 0.9 ? '#0f0' : '#050';
+        
+        ctx.fillText(text, x, y);
+        
+        // 随机重置位置，形成无尽下落
+        if (y > h && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+    requestAnimationFrame(draw);
+}
+draw();
+</script>
+<!-- === 特效结束 === -->
 </body>
 </html>
