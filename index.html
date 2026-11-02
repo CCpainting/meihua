@@ -7,76 +7,85 @@
 <style>
 :root{--bg:#0f1117;--card:#181c25;--gold:#c9a84c;--gold-dim:#8a733a;--text:#e8e4da;--muted:#9a958a;--line:#2a2f3a;--ji:#6fbf8a;--xiong:#d46a6a;--ping:#c9a84c;--blue:#7ea6d9}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:"Songti SC","STSong","Noto Serif SC",serif;line-height:1.75;padding:20px 14px 80px;max-width:900px;margin:0 auto}
-h1{font-size:20px;font-weight:500;text-align:center;color:var(--gold);letter-spacing:6px;margin-bottom:4px}
-.sub{text-align:center;color:var(--muted);font-size:12px;letter-spacing:1px;margin-bottom:22px}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px;margin-bottom:16px}
-.inputs{display:flex;gap:10px;flex-wrap:wrap}
+body{background:var(--bg);color:var(--text);font-family:"Songti SC","STSong","Noto Serif SC",serif;line-height:1.75;padding:24px 14px 80px;max-width:980px;margin:0 auto}
+h1{font-size:28px;font-weight:600;text-align:center;color:var(--gold);letter-spacing:8px;margin-bottom:8px;text-shadow:0 2px 10px rgba(201,168,76,.2)}
+.subtitle{text-align:center;color:var(--gold-dim);font-size:14px;letter-spacing:2px;margin-bottom:12px}
+.hint-top{text-align:center;color:var(--muted);font-size:14px;margin-bottom:20px;background:rgba(201,168,76,.05);padding:10px;border-radius:6px;border:1px solid rgba(201,168,76,.15)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px;box-shadow:0 4px 15px rgba(0,0,0,.2)}
+.inputs{display:flex;gap:12px;flex-wrap:wrap}
 .field{flex:1;min-width:120px}
-.field label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;letter-spacing:1px}
-.field input{width:100%;padding:11px;background:#0d0f14;border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:17px;font-family:inherit;text-align:center;outline:none}
+.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:6px;letter-spacing:1px}
+.field input{width:100%;padding:12px;background:#0d0f14;border:1px solid var(--line);border-radius:6px;color:var(--text);font-size:18px;font-family:inherit;text-align:center;outline:none}
 .field input:focus{border-color:var(--gold-dim)}
-.btn{display:block;width:100%;margin-top:14px;padding:13px;background:linear-gradient(135deg,#3a3220,#1e1a10);border:1px solid var(--gold-dim);border-radius:6px;color:var(--gold);font-size:15px;letter-spacing:4px;font-family:inherit;cursor:pointer}
-.btn:hover{border-color:var(--gold)}
-.topic-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px}
-.topic{flex:1;min-width:70px;padding:8px 4px;text-align:center;font-size:12px;background:#0d0f14;border:1px solid var(--line);border-radius:5px;color:var(--muted);cursor:pointer;font-family:inherit}
-.topic.active{color:var(--gold);border-color:var(--gold-dim);background:#1e1a10}
-.hex-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
-.hex-card{flex:1;min-width:160px;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:12px}
-.hex-card h3{font-size:11px;color:var(--muted);font-weight:400;letter-spacing:2px;margin-bottom:6px}
-.hex-name{font-size:17px;color:var(--gold);margin-bottom:2px}
-.hex-sym{font-size:22px;line-height:1.2;margin:4px 0;letter-spacing:2px}
-.hex-meta{font-size:11px;color:var(--muted);line-height:1.6}
-.lines{display:flex;flex-direction:column-reverse;gap:3px;margin-top:6px}
-.yao{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.yao-bar{display:flex;gap:4px;width:44px}
-.yao-bar span{height:6px;border-radius:1px;background:#3a3f4a;flex:1}
+.btn{display:block;width:100%;margin-top:16px;padding:14px;background:linear-gradient(135deg,#3a3220,#1e1a10);border:1px solid var(--gold-dim);border-radius:6px;color:var(--gold);font-size:16px;letter-spacing:6px;font-family:inherit;cursor:pointer;transition:.2s}
+.btn:hover{border-color:var(--gold);background:linear-gradient(135deg,#4a4028,#26200f)}
+.topic-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.topic{flex:1;min-width:80px;padding:10px 6px;text-align:center;font-size:14px;background:#0d0f14;border:1px solid var(--line);border-radius:6px;color:var(--muted);cursor:pointer;font-family:inherit;transition:.2s}
+.topic.active{color:var(--gold);border-color:var(--gold-dim);background:#1e1a10;box-shadow:0 0 10px rgba(201,168,76,.1)}
+
+.hex-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.hex-card{flex:1;min-width:220px;background:#0d0f14;border:1px solid var(--line);border-radius:8px;padding:16px;position:relative}
+.hex-card h3{font-size:13px;color:var(--muted);font-weight:400;letter-spacing:2px;margin-bottom:8px;text-align:center}
+.hex-name{font-size:22px;color:var(--gold);margin-bottom:4px;text-align:center;font-weight:600}
+.hex-sym{font-size:26px;line-height:1.2;margin:8px 0;letter-spacing:4px;text-align:center}
+.hex-meta{font-size:12px;color:var(--muted);line-height:1.6;text-align:center;margin-bottom:8px}
+.hex-relation{font-size:13px;color:var(--text);background:rgba(201,168,76,.1);padding:6px;border-radius:4px;text-align:center;margin-top:10px;border:1px dashed var(--gold-dim)}
+
+.lines{display:flex;flex-direction:column-reverse;gap:4px;margin-top:10px;max-width:120px;margin-left:auto;margin-right:auto}
+.yao{display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;color:var(--muted);padding:2px 0}
+.yao-bar{display:flex;gap:6px;width:60px}
+.yao-bar span{height:8px;border-radius:2px;background:#3a3f4a;flex:1;transition:.3s}
 .yao-bar.yang span{background:var(--gold-dim)}
-.yao.active .yao-bar span{background:var(--gold);box-shadow:0 0 5px rgba(201,168,76,.4)}
-.yao.active{color:var(--gold)}
-.sec-title{font-size:12px;color:var(--gold-dim);letter-spacing:3px;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:12px}
-.verdict{font-size:18px;text-align:center;padding:12px;border-radius:8px;margin-bottom:12px;letter-spacing:1px;font-weight:500}
-.verdict.ji{color:var(--ji);background:rgba(111,191,138,.08);border:1px solid rgba(111,191,138,.25)}
-.verdict.xiong{color:var(--xiong);background:rgba(212,106,106,.08);border:1px solid rgba(212,106,106,.25)}
-.verdict.ping{color:var(--ping);background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25)}
-.detail{margin-bottom:10px}
-.detail .label{font-size:11px;color:var(--muted);letter-spacing:1px;margin-bottom:3px}
-.detail .value{font-size:14px}
-.yaoci-box{background:#0d0f14;border-left:3px solid var(--gold-dim);padding:10px 12px;border-radius:0 6px 6px 0;margin-bottom:10px}
-.yaoci-box .original{font-size:14px;color:var(--gold);margin-bottom:3px}
-.yaoci-box .trans{font-size:12px;color:var(--muted)}
-.gua-text{font-size:13px;color:var(--text);background:#0d0f14;padding:10px 12px;border-radius:6px;margin-bottom:8px;line-height:1.7}
-.gua-text .gl{font-size:11px;color:var(--muted);margin-bottom:2px}
-.hint{font-size:11px;color:var(--muted);text-align:center;margin-top:8px;line-height:1.6}
-.phase{border-left:2px solid var(--blue);padding-left:10px;margin-bottom:10px}
-.phase .pt{font-size:12px;color:var(--blue);letter-spacing:1px;margin-bottom:2px}
-.phase .pd{font-size:13px}
-.tbl{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
-.tbl th,.tbl td{padding:6px 7px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
-.tbl th{color:var(--muted);font-weight:400;font-size:11px}
+.yao.active .yao-bar span{background:var(--gold);box-shadow:0 0 8px rgba(201,168,76,.6)}
+.yao.active{color:var(--gold);font-weight:bold}
+.yao.diff .yao-bar span{border:1px dashed var(--gold);background:transparent;box-shadow:none}
+.yao.diff.active .yao-bar span{border-style:solid;background:var(--gold)}
+
+.sec-title{font-size:14px;color:var(--gold);letter-spacing:4px;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:16px;text-align:center;font-weight:bold}
+.verdict{font-size:22px;text-align:center;padding:16px;border-radius:8px;margin-bottom:16px;letter-spacing:2px;font-weight:600}
+.verdict.ji{color:var(--ji);background:rgba(111,191,138,.1);border:1px solid rgba(111,191,138,.3)}
+.verdict.xiong{color:var(--xiong);background:rgba(212,106,106,.1);border:1px solid rgba(212,106,106,.3)}
+.verdict.ping{color:var(--ping);background:rgba(201,168,76,.1);border:1px solid rgba(201,168,76,.3)}
+.detail{margin-bottom:12px}
+.detail .label{font-size:12px;color:var(--muted);letter-spacing:1px;margin-bottom:4px}
+.detail .value{font-size:15px}
+.gua-text{font-size:14px;color:var(--text);background:#0d0f14;padding:12px 14px;border-radius:6px;margin-bottom:12px;line-height:1.8;border-left:3px solid var(--gold-dim)}
+.gua-text .gl{font-size:12px;color:var(--muted);margin-bottom:4px;font-weight:bold}
+.yaoci-box{background:#0d0f14;border-left:3px solid var(--gold);padding:14px;border-radius:0 6px 6px 0;margin-bottom:14px}
+.yaoci-box .original{font-size:16px;color:var(--gold);margin-bottom:6px;font-weight:bold}
+.yaoci-box .trans{font-size:14px;color:var(--muted);line-height:1.8}
+.phase{border-left:2px solid var(--blue);padding-left:14px;margin-bottom:12px}
+.phase .pt{font-size:14px;color:var(--blue);letter-spacing:1px;margin-bottom:4px;font-weight:bold}
+.phase .pd{font-size:14px;line-height:1.8}
+.hint{font-size:12px;color:var(--muted);text-align:center;margin-top:12px;line-height:1.6}
 .hidden{display:none}
-@media(max-width:500px){.hex-card{min-width:100%}}
+@media(max-width:600px){
+  .hex-card{min-width:100%}
+  h1{font-size:24px}
+  .hint-top{font-size:13px}
+}
 </style>
 </head>
 <body>
 
 <h1>梅 花 易 數 · 全 解</h1>
-<p class="sub">三数起卦 · 本互变三卦 · 体用生克 · 分事项解读</p>
+<p class="subtitle">三数起卦 · 本互变三卦 · 体用生克 · 分事项解读</p>
+<p class="hint-top">💡 请先选择下方【所问事项】，再填入三个数字起卦。事项不同，同一个体用关系的吉凶含义完全不同。</p>
 
 <div class="panel">
-  <div class="inputs">
-    <div class="field"><label>一 → 上卦</label><input type="number" id="n1" placeholder="如17" min="1"></div>
-    <div class="field"><label>二 → 下卦</label><input type="number" id="n2" placeholder="如8" min="1"></div>
-    <div class="field"><label>三 → 动爻</label><input type="number" id="n3" placeholder="如5" min="1"></div>
-  </div>
   <div class="topic-row" id="topics">
     <div class="topic active" data-t="婚姻">婚姻感情</div>
     <div class="topic" data-t="事业">事业求谋</div>
     <div class="topic" data-t="家宅">家宅运势</div>
     <div class="topic" data-t="求财">求财</div>
   </div>
+  
+  <div class="inputs" style="margin-top:16px">
+    <div class="field"><label>一 → 上卦</label><input type="number" id="n1" placeholder="如17" min="1"></div>
+    <div class="field"><label>二 → 下卦</label><input type="number" id="n2" placeholder="如8" min="1"></div>
+    <div class="field"><label>三 → 动爻</label><input type="number" id="n3" placeholder="如5" min="1"></div>
+  </div>
   <button class="btn" onclick="divine()">起 卦</button>
-  <p class="hint">选择所问事项，再填三数起卦。事项不同，同一个体用关系的吉凶含义不同。</p>
 </div>
 
 <div id="result" class="hidden"></div>
@@ -92,7 +101,6 @@ function findName(a){for(var k in T){var t=T[k];if(t[0]==a[0]&&t[1]==a[1]&&t[2]=
 function wx(a,b){var s={'木':'火','火':'土','土':'金','金':'水','水':'木'},k={'木':'土','土':'水','水':'火','火':'金','金':'木'};if(a==b)return['比和','平'];if(s[b]==a)return['用生体','吉'];if(s[a]==b)return['体生用','小凶'];if(k[a]==b)return['体克用','小吉'];if(k[b]==a)return['用克体','凶'];return['?','平']}
 
 /* ===== 六十四卦：卦辞 + 六爻[原文,白话] ===== */
-/* 数据来源：《周易》六十四卦爻辞全文（含白话），按通行本顺序 */
 var G={};
 G['乾为天']=['元亨利贞。',[['潜龙勿用','时机未到，宜潜伏蓄力，不宜妄动'],['见龙在田，利见大人','开始崭露头角，宜寻求贵人指引'],['君子终日乾乾，夕惕若厉，无咎','日夜勤勉警惕，虽有风险但可无灾'],['或跃在渊，无咎','进退皆可，审时度势则无灾'],['飞龙在天，利见大人','时机成熟，大展宏图，贵人相助'],['亢龙有悔','过于高傲则有悔恨，盛极必衰']]];
 G['坤为地']=['元亨，利牝马之贞。君子有攸往，先迷后得主，利。西南得朋，东北丧朋。安贞吉。',[['履霜，坚冰至','踏到霜雪，预示寒冬将至；小事可见大势'],['直方大，不习无不利','正直方正，自然行事无不利'],['含章可贞，或从王事，无成有终','才华内敛，从事公务虽无功劳但有善终'],['括囊，无咎无誉','收敛锋芒如束口袋，无灾无誉'],['黄裳，元吉','居中守正如穿黄裳，大吉'],['龙战于野，其血玄黄','阴阳相争，必有损伤']]];
@@ -160,36 +168,11 @@ G['水火既济']=['亨小，利贞。初吉终乱。',[['曳其轮，濡其尾�
 G['火水未济']=['亨。小狐汔济，濡其尾，无攸利。',[['濡其尾，吝','濡其尾，有悔'],['曳其轮，贞吉','曳其轮，守正吉'],['未济，征凶，利涉大川','未济，征凶，利涉大川'],['贞吉，悔亡。震用伐鬼方，三年有赏于大国','守正吉悔亡，伐鬼方'],['贞吉，无悔。君子之光，有孚，吉','守正吉无悔，君子之光'],['有孚于饮酒，无咎。濡其首，有孚失是','有孚饮酒，无灾']]];
 
 /* ===== 分事项的体用解读规则 ===== */
-/* 每条：体用关系 → {判定, 一句话理由} */
 var TOPIC_RULES = {
-  '婚姻': {
-    '用生体': ['吉', '对方或婚姻关系主动来助你，感情容易推进，甚至因婚得利。'],
-    '体生用': ['小凶', '你在为这段关系单向付出，精力、钱财外泄，婚难速成，或代价较大。'],
-    '体克用': ['小吉', '你能主导这段关系，可以成，但过程偏慢，需要耐心处理对方的犹豫或外部阻力。'],
-    '用克体': ['凶', '对方或关系本身在制约你，勉强成婚反易受制，不宜强求。'],
-    '比和': ['大吉', '体用同心，双方势均力敌，是良配之象。']
-  },
-  '事业': {
-    '用生体': ['大吉', '所谋之事来生助你，贵人、机遇自来，不谋而成或少谋多得。'],
-    '体生用': ['小凶', '你在单向消耗自己去推动事情，多谋少遂，精力投入大而回报慢。'],
-    '体克用': ['小吉', '事情在你掌控之内，可成，但偏慢、偏辛苦，属于“克者得之艰”。'],
-    '用克体': ['凶', '外部环境或事情本身在压制你，强推有害，宜退守待时。'],
-    '比和': ['吉', '内外和谐，谋事称意，阻力小。']
-  },
-  '家宅': {
-    '用生体': ['吉', '家宅之气来养你，家中多进益、有馈送之喜，居住安稳。'],
-    '体生用': ['小凶', '家宅耗你之气，多耗散，防失盗或入不敷出。'],
-    '体克用': ['吉', '你能镇得住家宅，家宅多吉，但需你主动经营。'],
-    '用克体': ['凶', '家宅之气反制你，居住多不安，易有口舌或健康上的牵扯。'],
-    '比和': ['吉', '家宅安稳，人与宅相安。']
-  },
-  '求财': {
-    '用生体': ['吉', '财来生你，有进益之喜，财路主动向你靠拢。'],
-    '体生用': ['小凶', '你在向外掏钱，财有损耗之忧，不宜再投。'],
-    '体克用': ['吉', '你能制住财，有财可得，但需要主动去取、去经营。'],
-    '用克体': ['凶', '财反过来制你，求财难得，强求反损。'],
-    '比和': ['吉', '财与己相安，平稳可得。']
-  }
+  '婚姻': {'用生体':['吉','对方主动来助，感情易推进。'],'体生用':['小凶','单向付出，婚难速成。'],'体克用':['小吉','能主导但过程慢。'],'用克体':['凶','受对方制约，不宜强求。'],'比和':['大吉','势均力敌，良配之象。']},
+  '事业': {'用生体':['大吉','贵人相助，少谋多得。'],'体生用':['小凶','多谋少遂，投入大回报慢。'],'体克用':['小吉','事在掌控，但偏辛苦。'],'用克体':['凶','受外部压制，宜退守。'],'比和':['吉','内外和谐，谋事称意。']},
+  '家宅': {'用生体':['吉','宅气养人，安稳进益。'],'体生用':['小凶','多耗散，防破财失盗。'],'体克用':['吉','能镇得住家宅，需主动经营。'],'用克体':['凶','宅气反制，居住多不安。'],'比和':['吉','人宅相安，平稳。']},
+  '求财': {'用生体':['吉','财来找你，有进益之喜。'],'体生用':['小凶','向外掏钱，防损耗。'],'体克用':['吉','能制住财，需主动争取。'],'用克体':['凶','求财难得，强求反损。'],'比和':['吉','财与己相安，平稳可得。']}
 };
 
 var curTopic='婚姻';
@@ -205,15 +188,20 @@ function divine(){
   var u=B[m8(n1)],d=B[m8(n2)],y=m6(n3);
   var benName=M[u[0]+d[0]];
   var benLines=linesOf(d[0]).concat(linesOf(u[0]));
+  
   // 互卦
   var hl=findName(benLines.slice(1,4)),hu=findName(benLines.slice(2,5));
   var huName=M[hu+hl];
+  var huLines=linesOf(hl).concat(linesOf(hu));
   var huU=B[Object.keys(B).find(function(k){return B[k][0]===hu})],huL=B[Object.keys(B).find(function(k){return B[k][0]===hl})];
+  
   // 变卦
   var b2=benLines.slice(); b2[y-1]=b2[y-1]?0:1;
   var bu=findName(b2.slice(3,6)),bd=findName(b2.slice(0,3));
   var bianName=M[bu+bd];
+  var bianLines=linesOf(bd).concat(linesOf(bu));
   var bianU=B[Object.keys(B).find(function(k){return B[k][0]===bu})],bianL=B[Object.keys(B).find(function(k){return B[k][0]===bd})];
+  
   // 体用
   var dongUpper=y>=4;
   var ti=dongUpper?d:u, yong=dongUpper?u:d;
@@ -222,26 +210,24 @@ function divine(){
   var gi=rule[0];
   var vClass=gi.indexOf('吉')>=0?'ji':(gi.indexOf('凶')>=0?'xiong':'ping');
 
+  // 互变对体的关系
+  var hRelU=wx(ti[2],huU[2]),hRelL=wx(ti[2],huL[2]);
+  var bRelU=wx(ti[2],bianU[2]),bRelL=wx(ti[2],bianL[2]);
+  
+  function getRelStr(t, arr){
+    var str = arr[0] + '，';
+    if(t[0]==='用生体') return str+'有助';
+    if(t[0]==='体生用') return str+'有耗';
+    if(t[0]==='体克用') return str+'可控但迟';
+    if(t[0]==='用克体') return str+'受阻';
+    return str+'平顺';
+  }
+
   // 爻辞
   var gd=G[benName]||G['乾为天'];
   var yc=gd[1][y-1]||['（无）','（无）'];
   var isYang=benLines[y-1]===1;
   var posName=(y===1||y===6)?['初','上'][y===1?0:1]+(isYang?'九':'六'):(isYang?'九':'六')+['','二','三','四','五'][y-1];
-
-  // 互变对体的简参
-  var hRelU=wx(ti[2],huU[2]),hRelL=wx(ti[2],huL[2]);
-  var bRelU=wx(ti[2],bianU[2]),bRelL=wx(ti[2],bianL[2]);
-
-  // 过程与结局的一句话
-  function phaseText(r){
-    if(r[0]==='用生体')return '有助';
-    if(r[0]==='体生用')return '有耗';
-    if(r[0]==='体克用')return '可控但迟';
-    if(r[0]==='用克体')return '受阻';
-    return '平顺';
-  }
-  var huSummary=phaseText(hRelU)+' / '+phaseText(hRelL);
-  var bianSummary=phaseText(bRelU)+' / '+phaseText(bRelL);
 
   // 综合建议
   var advice='';
@@ -251,44 +237,57 @@ function divine(){
   else if(gi==='凶'){advice='强求不利。退一步，把节奏放慢，或者换一个方向，比硬推更明智。';}
   else{advice='以稳为主，不作激进决定。';}
 
-  function linesHTML(lines,active){
+  // 渲染六爻 HTML
+  function linesHTML(lines, active, compareLines){
     return '<div class="lines">'+lines.map(function(v,i){
-      return '<div class="yao '+(i+1===active?'active':'')+'"><span style="width:18px">'+(i+1)+'</span><div class="yao-bar '+(v===1?'yang':'')+'"><span></span><span></span></div><span>'+(v===1?'阳':'阴')+'</span></div>';
+      var isActive = (i+1===active);
+      var isDiff = compareLines && (compareLines[i] !== v);
+      return '<div class="yao '+(isActive?'active ':'')+(isDiff?'diff':'')+'">'+
+             '<span style="width:18px">'+(i+1)+'</span>'+
+             '<div class="yao-bar '+(v===1?'yang':'')+'"><span></span><span></span></div>'+
+             '<span>'+(v===1?'阳':'阴')+'</span>'+
+             '</div>';
     }).join('')+'</div>';
   }
 
   var el=document.getElementById('result'); el.classList.remove('hidden');
 
   el.innerHTML=
+  // --- 模块 1: 三卦展示 ---
   '<div class="panel"><div class="sec-title">卦 象 · 本 / 互 / 变</div>'+
   '<div class="hex-row">'+
-    '<div class="hex-card"><h3>本 卦 · 现状</h3><div class="hex-name">'+benName+'</div><div class="hex-sym">'+u[1]+d[1]+'</div><div class="hex-meta">上'+u[0]+'（'+u[2]+'）· 下'+d[0]+'（'+d[2]+'）</div>'+linesHTML(benLines,y)+'</div>'+
-    '<div class="hex-card"><h3>互 卦 · 过程</h3><div class="hex-name">'+huName+'</div><div class="hex-sym">'+huU[1]+huL[1]+'</div><div class="hex-meta">上'+hu+'（'+huU[2]+'）· 下'+hl+'（'+huL[2]+'）</div><div class="hex-meta" style="margin-top:6px">事之中间过程、隐藏因素</div></div>'+
-    '<div class="hex-card"><h3>变 卦 · 结局</h3><div class="hex-name">'+bianName+'</div><div class="hex-sym">'+bianU[1]+bianL[1]+'</div><div class="hex-meta">上'+bu+'（'+bianU[2]+'）· 下'+bd+'（'+bianL[2]+'）</div><div class="hex-meta" style="margin-top:6px">事之最终走向</div></div>'+
-  '</div></div>'+
+    // 本卦
+    '<div class="hex-card"><h3>本 卦 · 现状</h3><div class="hex-name">'+benName+'</div><div class="hex-sym">'+u[1]+d[1]+'</div><div class="hex-meta">上'+u[0]+'（'+u[2]+'）· 下'+d[0]+'（'+d[2]+'）</div>'+
+    linesHTML(benLines,y,null)+
+    '<div class="hex-relation">体用关系：'+rel[0]+'</div></div>'+
+    // 互卦
+    '<div class="hex-card"><h3>互 卦 · 过程</h3><div class="hex-name">'+huName+'</div><div class="hex-sym">'+huU[1]+huL[1]+'</div><div class="hex-meta">上'+hu+'（'+huU[2]+'）· 下'+hl+'（'+huL[2]+'）</div>'+
+    linesHTML(huLines, null, benLines)+
+    '<div class="hex-relation" style="font-size:12px">'+getRelStr(hRelU, hRelU)+'<br>'+getRelStr(hRelL, hRelL)+'</div></div>'+
+    // 变卦
+    '<div class="hex-card"><h3>变 卦 · 结局</h3><div class="hex-name">'+bianName+'</div><div class="hex-sym">'+bianU[1]+bianL[1]+'</div><div class="hex-meta">上'+bu+'（'+bianU[2]+'）· 下'+bd+'（'+bianL[2]+'）</div>'+
+    linesHTML(bianLines, null, benLines)+
+    '<div class="hex-relation" style="font-size:12px">'+getRelStr(bRelU, bRelU)+'<br>'+getRelStr(bRelL, bRelL)+'</div></div>'+
+  '</div>'+
+  '<p class="hint">* 互卦与变卦中，带虚线的爻为与原卦不同之处。</p></div>'+
 
-  '<div class="panel"><div class="sec-title">体 用 与 主 判 · '+curTopic+'</div>'+
-  '<div class="verdict '+vClass+'">'+gi+' · '+curTopic+'</div>'+
+  // --- 模块 2: 综合建议 ---
+  '<div class="panel"><div class="sec-title">综 合 建 议 · '+curTopic+'</div>'+
+  '<div class="verdict '+vClass+'">'+gi+'</div>'+
+  '<div class="gua-text" style="border-left:3px solid var(--gold-dim);border-radius:0 6px 6px 0;font-size:15px;text-align:center;padding:16px;">'+advice+'</div>'+
+  '<div class="detail" style="margin-top:16px"><div class="label">为什么这么断？</div><div class="value">'+rule[1]+'</div></div>'+
   '<div class="detail"><div class="label">体卦（你 / 己方 / 静）</div><div class="value">'+ti[0]+' · '+ti[2]+' · '+ti[3]+'</div></div>'+
-  '<div class="detail"><div class="label">用卦（所问之事 / 对方 / 动）</div><div class="value">'+yong[0]+' · '+yong[2]+' · '+yong[3]+'</div></div>'+
-  '<div class="detail"><div class="label">体用关系</div><div class="value">'+rel[0]+'（'+ti[2]+' ↔ '+yong[2]+'）</div></div>'+
-  '<div class="gua-text"><div class="gl">为什么是这个判定</div>'+rule[1]+'</div>'+
-  '<div class="detail"><div class="label">动爻</div><div class="value">第 '+y+' 爻（'+posName+'）</div></div>'+
-  '</div>'+
+  '<div class="detail"><div class="label">用卦（所问之事 / 对方 / 动）</div><div class="value">'+yong[0]+' · '+yong[2]+' · '+yong[3]+'</div></div></div>'+
 
-  '<div class="panel"><div class="sec-title">卦 辞 与 动 爻</div>'+
-  '<div class="gua-text"><div class="gl">'+benName+' · 卦辞</div>'+gd[0]+'</div>'+
-  '<div class="yaoci-box"><div class="original">'+posName+'：'+yc[0]+'</div><div class="trans">'+yc[1]+'</div></div>'+
-  '<p class="hint">梅花易数以体用生克为主判，动爻爻辞为“当前节点”的辅参。</p></div>'+
-
-  '<div class="panel"><div class="sec-title">事 态 如 何 演 变</div>'+
-  '<div class="phase"><div class="pt">本卦 → 你现在的起点</div><div class="pd">'+benName+'，'+ti[0]+'为体、'+yong[0]+'为用，'+rel[0]+'。'+rule[1]+'</div></div>'+
-  '<div class="phase"><div class="pt">互卦 → 中间过程与隐藏因素</div><div class="pd">'+huName+'。上互'+hu+'（'+huU[2]+'）对体：'+hRelU[0]+'；下互'+hl+'（'+huL[2]+'）对体：'+hRelL[0]+'。过程'+huSummary+'。</div></div>'+
-  '<div class="phase"><div class="pt">变卦 → 最终走向</div><div class="pd">'+bianName+'。变上'+bu+'（'+bianU[2]+'）对体：'+bRelU[0]+'；变下'+bd+'（'+bianL[2]+'）对体：'+bRelL[0]+'。结局'+bianSummary+'。</div></div>'+
-  '</div>'+
-
-  '<div class="panel"><div class="sec-title">综 合 建 议</div><div class="gua-text" style="border-left:3px solid var(--gold-dim);border-radius:0 6px 6px 0">'+advice+'</div>'+
-  '<p class="hint">同一组体用关系，问婚姻、问事业、问求财的吉凶含义不同。切换上方事项按钮再起卦，可以看同一卦在不同事情上的解读。</p></div>';
+  // --- 模块 3: 卦辞与事态演变 ---
+  '<div class="panel"><div class="sec-title">卦 辞 与 事 态 演 变</div>'+
+  '<div class="detail"><div class="label">本卦卦辞（'+benName+'）</div><div class="gua-text">'+gd[0]+'</div></div>'+
+  '<div class="detail"><div class="label">动爻爻辞（第 '+y+' 爻 · '+posName+'）</div>'+
+  '<div class="yaoci-box"><div class="original">'+posName+'：'+yc[0]+'</div><div class="trans">'+yc[1]+'</div></div></div>'+
+  '<div class="phase" style="margin-top:20px"><div class="pt">📍 现在的起点（本卦）</div><div class="pd">'+benName+'，'+ti[0]+'为体、'+yong[0]+'为用，'+rel[0]+'。'+rule[1]+'</div></div>'+
+  '<div class="phase"><div class="pt">🚧 中间的过程（互卦）</div><div class="pd">'+huName+'。上互'+hu+'对体：'+hRelU[0]+'；下互'+hl+'对体：'+hRelL[0]+'。过程'+(hRelU[1]==='吉'&&hRelL[1]==='吉'?'大顺':(hRelU[1]==='凶'||hRelL[1]==='凶'?'多阻':'平稳'))+'。</div></div>'+
+  '<div class="phase"><div class="pt">🏁 最终的走向（变卦）</div><div class="pd">'+bianName+'。变上'+bu+'对体：'+bRelU[0]+'；变下'+bd+'对体：'+bRelL[0]+'。结局'+(bRelU[1]==='吉'&&bRelL[1]==='吉'?'圆满':(bRelU[1]==='凶'||bRelL[1]==='凶'?'不佳':'平平'))+'。</div></div>'+
+  '</div>';
 
   el.scrollIntoView({behavior:'smooth',block:'start'});
 }
